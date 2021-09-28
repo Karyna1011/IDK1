@@ -1,3 +1,4 @@
+
 package main
 import (
 	"encoding/json"
@@ -42,7 +43,9 @@ type Item struct {
 }
 func main() {
 	mylink:="http://localhost:8000/_/api/v3/key_values"
-	for i := 0; i < 15; i++ {
+	//count :="str"
+	length:=1
+	Datan:=Foo{}
 	response, err := http.Get(mylink)
 	if err != nil {
 		log.Fatal(err)
@@ -56,15 +59,7 @@ func main() {
 		fmt.Printf("failed to read json file, error: %v", err)
 		return
 	}
-
-
-	//Array:=Item{}
-    Datan:=Foo{}
-
-
-	//json.Unmarshal([]byte(dataInBytes), &Datan)
-	//fmt.Println(Datan)
-
+	
 	err0:= json.Unmarshal([]byte(dataInBytes), &Datan)
 	if err0 != nil {
 		fmt.Println(err0)
@@ -73,7 +68,41 @@ func main() {
 
 	fmt.Println("Self=",Datan.Links.Self)
 	fmt.Println("Next=",Datan.Links.Next)
-	mylink="http://localhost:8000/_/api"+Datan.Links.Next}
+
+	length=len(Datan.Info)
+	mylink="http://localhost:8000/_/api"+Datan.Links.Next
+
+	for i := 0; length!=0 ; i++ {
+		    fmt.Println("Data=",Datan.Info[0])
+			response, err := http.Get(mylink)
+			if err != nil {
+				log.Fatal(err)
+			}
+			defer response.Body.Close()
+
+
+
+			dataInBytes, err := ioutil.ReadAll(response.Body)
+			if err != nil {
+				fmt.Printf("failed to read json file, error: %v", err)
+				return
+			}
+
+
+
+			error:= json.Unmarshal([]byte(dataInBytes), &Datan)
+			if error != nil {
+				fmt.Println(err0)
+				return
+			}
+
+			fmt.Println("Self=",Datan.Links.Self)
+			fmt.Println("Next=",Datan.Links.Next)
+
+
+			
+			length=len(Datan.Info)
+			mylink="http://localhost:8000/_/api"+Datan.Links.Next}
 
 	
 
