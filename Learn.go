@@ -1,4 +1,3 @@
-
 package main
 import (
 	"encoding/json"
@@ -13,27 +12,27 @@ import (
 type PageContent struct{
 	Info [] Data `json:"data"`
 	Included [] string `json:"included"`
-	Links Linksstruct `json:"links"`
+	Links Linkstruct `json:"links"`
 }
 
-type Linksstruct struct{
+type Linkstruct struct{
 	Next string `json:"next"`
 	Self string `json:"self"`
 }
 
 type Data struct {
 	Id string `json:"id"`
-	Type1 string `json:"type"`
-	Attributes FirstStruc `json:"attributes"`
+	TypeData string `json:"type"`
+	Attributes AttributesStruct `json:"attributes"`
 }
-type FirstStruc struct{
-	Value SecondStruc `json:"value"`
+type AttributesStruct struct{
+	Value ValueStruct `json:"value"`
 	U32 int `json:"u32"`
 }
-type SecondStruc struct{
-	Type2 ThirdStruc `json:"type"`
+type ValueStruct struct{
+	TypeValue TypeStruct `json:"type"`
 }
-type ThirdStruc struct{
+type TypeStruct struct{
 	Value int `json:"value"`
 	Name string `json:"name"`
 }
@@ -42,11 +41,10 @@ type Item struct {
 	Pages [] PageContent
 }
 func main() {
-	mylink:="http://localhost:8000/_/api/v3/key_values"
-	//count :="str"
+	MyLink:="http://localhost:8000/_/api/v3/key_values"
 	length:=1
 	Datan:=PageContent{}
-	response, err := http.Get(mylink)
+	response, err := http.Get(MyLink)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -70,11 +68,11 @@ func main() {
 	fmt.Println("Next=",Datan.Links.Next)
 
 	length=len(Datan.Info)
-	mylink="http://localhost:8000/_/api"+Datan.Links.Next
+	MyLink="http://localhost:8000/_/api"+Datan.Links.Next
 
 	for i := 0; length!=0 ; i++ {
-		    fmt.Println("Data=",Datan.Info[0])
-			response, err := http.Get(mylink)
+		        fmt.Println("Data=",Datan.Info[0])
+			response, err := http.Get(MyLink)
 			if err != nil {
 				log.Fatal(err)
 			}
@@ -87,8 +85,7 @@ func main() {
 				fmt.Printf("failed to read json file, error: %v", err)
 				return
 			}
-
-
+			
 			error:= json.Unmarshal([]byte(dataInBytes), &Datan)
 			if error != nil {
 				fmt.Println(err0)
@@ -98,9 +95,8 @@ func main() {
 			fmt.Println("Self=",Datan.Links.Self)
 			fmt.Println("Next=",Datan.Links.Next)
 
-
 			length=len(Datan.Info)
-			mylink="http://localhost:8000/_/api"+Datan.Links.Next}
+			MyLink="http://localhost:8000/_/api"+Datan.Links.Next}
 
 
 
