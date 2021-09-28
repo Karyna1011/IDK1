@@ -10,7 +10,7 @@ import (
 
 )
 
-type Foo struct{
+type PageContent struct{
 	Info [] Data `json:"data"`
 	Included [] string `json:"included"`
 	Links Linksstruct `json:"links"`
@@ -39,13 +39,13 @@ type ThirdStruc struct{
 }
 
 type Item struct {
-	Foos [] Foo
+	Pages [] PageContent
 }
 func main() {
 	mylink:="http://localhost:8000/_/api/v3/key_values"
 	//count :="str"
 	length:=1
-	Datan:=Foo{}
+	Datan:=PageContent{}
 	response, err := http.Get(mylink)
 	if err != nil {
 		log.Fatal(err)
@@ -89,7 +89,6 @@ func main() {
 			}
 
 
-
 			error:= json.Unmarshal([]byte(dataInBytes), &Datan)
 			if error != nil {
 				fmt.Println(err0)
@@ -100,11 +99,9 @@ func main() {
 			fmt.Println("Next=",Datan.Links.Next)
 
 
-			
 			length=len(Datan.Info)
 			mylink="http://localhost:8000/_/api"+Datan.Links.Next}
 
-	
+
 
 }
-
