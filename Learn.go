@@ -1,39 +1,3 @@
-/*package main
-
-import (
-	"fmt"
-	"io"
-	"log"
-	"net/http"
-	"os"
-)
-
-func main() {
-	//var mydata string[];
-	// запрос в формате http
-	//response, request := http.Get("http://localhost:8000/_/api/")
-	response, request := http.Get("http://localhost:8000/_/api/v3/key_values")
-
-	if request != nil {
-		log.Fatal("failed to read file:",request) //Fatal is equivalent to Print() followed by a call to os.Exit(1)
-	}
-	defer response.Body.Close()  //закрываем файл defer до выхода из функции мейн
-
-
-
-	// копируем инфо в нормальный вывод
-
-	if request != nil {
-		n, request := io.Copy(os.Stdout, response.Body)
-		log.Fatal("failed to copy file",request)
-	}
-
-	fmt.Println("number of bytes:",n)
-}
-*/
-
-
-
 package main
 import (
 	"encoding/json"
@@ -111,41 +75,7 @@ func main() {
 	fmt.Println("Next=",Datan.Links.Next)
 	mylink="http://localhost:8000/_/api"+Datan.Links.Next}
 
-	/*err1:= json.Unmarshal([]byte(dataInBytes), &Array)
-	if err1 != nil {
-		fmt.Println(err1)
-		return
-	}
-	fmt.Println(Array)*/
-	//for _, t := range array {
-	//	fmt.Println(t, "-")
-	//}
+	
 
 }
-/*
-package main
 
-import (
-	"fmt"
-	"io"
-	"log"
-	"net/http"
-	"os"
-)
-
-func main() {
-	// запрос в формате http
-	response, request := http.Get("http://localhost:8000/_/api/v3/key_values")
-	if request != nil {
-		log.Fatal("failed to read file:",request) //Fatal is equivalent to Print() followed by a call to os.Exit(1)
-	}
-	defer response.Body.Close()  //закрываем файл defer до выхода из функции мейн
-
-	// копируем инфо в нормальный вывод
-	n, request := io.Copy(os.Stdout, response.Body)
-	if request != nil {
-		log.Fatal("failed to copy file",request)
-	}
-
-	fmt.Println("number of bytes:", n)
-} */
